@@ -6,10 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up Page</title>
     <style>
+        /* @import url('https://fonts.cdnfonts.com/css/poppins'); */
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            outline: none;
+            font-family: poppins;
         }
 
         main {
@@ -18,10 +22,11 @@
             align-items: center;
             background: rgb(23, 23, 23);
             height: 100vh;
+            flex-flow: column;
         }
 
         form {
-            background: rgb(65, 65, 65);
+            background: rgb(40, 40, 40);
             display: flex;
             flex-flow: column;
             padding: 1em;
@@ -38,6 +43,7 @@
             color: white;
             padding-bottom: .2em;
             margin-left: .5em;
+            font-size: .9rem;
         }
 
         input,
@@ -48,7 +54,7 @@
             font-size: 1rem;
             max-width: 30em;
             width: 100%;
-            padding: 1em .5em;
+            padding: .5em .5em;
         }
 
         button {
@@ -56,12 +62,21 @@
             color: rgb(0, 0, 0);
             font-weight: bolder;
         }
+
+        h1 {
+            text-align: center;
+            color: white;
+            padding: 1em 0;
+            text-transform: uppercase;
+        }
     </style>
 </head>
 
 <body>
     <main class="main">
+        <h1>SIGNUP</h1>
         <form action="/create/user" method="POST">
+
             <div>
                 <label>Full Name</label>
                 <input type="text" name="fullName" placeholder="Full Name">
@@ -79,8 +94,8 @@
                 <input type="password" name="password" placeholder="Password">
             </div>
             <div>
-                <label>Account Type</label>
-                <select name="accountType">
+                <label>Role</label>
+                <select name="role">
                     <option value="super-admin">Super Admin</option>
                 </select>
             </div>

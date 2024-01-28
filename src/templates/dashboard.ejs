@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard</title>
+  <style>
+    /* @import url('https://fonts.cdnfonts.com/css/poppins'); */
+
+    * {
+      margin: 0;
+      font-family: poppins;
+      padding: 0;
+      box-sizing: border-box;
+      outline: none;
+
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      padding: 1em;
+      align-items: center;
+    }
+
+    p {
+      line-height: 1em;
+    }
+
+    section {
+      display: flex;
+      gap: 1em;
+      align-items: center;
+      justify-content: center;
+    }
+
+    nav section:last-child button {
+      padding: 1em 2em;
+    }
+
+
+
+    .info p:last-child {
+      background: rgb(49, 49, 49);
+      color: white;
+      padding: 0.2em 0.5em;
+    }
+
+    .info p:first-child {
+      font-weight: bolder;
+    }
+
+    .modal {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      width: 100%;
+      position: fixed;
+      display: none;
+      top: 0;
+      background: rgba(23, 23, 23, 0.838);
+      left: 0;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    form div {
+      display: flex;
+      flex-flow: column;
+    }
+
+    .modal form {
+      background: rgb(27, 27, 27);
+      display: flex;
+      flex-flow: column;
+      padding: 1em;
+      /* width: 20%; */
+      gap: 1em;
+      font-size: .9rem;
+    }
+
+    label {
+      color: white;
+      padding-bottom: .4em;
+      font-size: .8rem;
+      padding-left: .5em;
+    }
+
+    input,
+    select,
+    button.submit {
+      border-radius: .3em;
+      border: none;
+      font-size: 1rem;
+      width: 100%;
+      padding: 1em .5em;
+      font-size: .9rem;
+    }
+
+
+    .closebutton {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .closebutton div {
+      position: absolute;
+      font-size: 3em;
+      top: 1em;
+      cursor: pointer;
+    }
+
+    .intro {
+      padding-top: 3em;
+      display: flex;
+      flex-flow: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    table {
+      max-width: 60em;
+      width: 100%;
+      margin-top: 3em;
+    }
+
+    table th,
+    table td {
+      border: solid 1px black;
+      color: black;
+      padding: .5em .3em;
+    }
+
+    table th {
+      background: rgb(49, 49, 49);
+      color: white;
+    }
+
+    table td {
+      border: solid 1px rgb(35, 35, 35);
+    }
+
+    h1,
+    h3 {
+      text-align: center;
+    }
+
+    h1 {
+      text-transform: uppercase;
+      font-size: 4rem;
+      text-align: center;
+    }
+
+    h1 span {
+      color: white;
+      background: rgb(49, 49, 49);
+
+    }
+
+
+    h3 {
+      font-size: 3rem;
+      font-style: italic;
+      font-weight: normal;
+    }
+
+    h3 span {
+      font-style: initial;
+      font-weight: bolder;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <nav>
+      <section>
+        <h2>ProjectX</h2>
+      </section>
+      <section>
+        <div class="info">
+          <p>
+            <%= user.fullName %>
+          </p>
+          <p>
+            <%= user.role.split("-").join(" ") %>
+                    </p>
+                </div>
+                <div> <button class=" button modal-toggle-button">Add User</button>
+        </div>
+        <div class="logout_btn button">
+          <form action="/logout" method="post">
+            <button>Logout</button>
+          </form>
+        </div>
+      </section>
+    </nav>
+
+    <div class="intro">
+      <h3>
+        Hello, <span>
+          <%= user.fullName %>
+        </span>
+      </h3>
+      <h1>YOU ARE A <br><span>
+          <%= user.role.split("-").join(" ") %></span></h1>
+          <table>
+            <tr>
+              <th>S/N</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Has Password</th>
+            </tr>
+
+            <% users.forEach(function(user, index) { %>
+              <tr>
+                <td>
+                  <%= index+1 %>
+                </td>
+                <td>
+                  <%= user.fullName %>
+                </td>
+                <td>
+                  <%= user.email %>
+                </td>
+
+                <td>
+                  <%= user.role %>
+                </td>
+
+                <td>
+                  <%= user.password? " yes" : "no" %>
+            </td>
+
+            </tr>
+            <% }); %>
+
+              </table>
+  </main>
+  </div>
+
+  <div class=" modal">
+    <form action="/add/user" method="POST">
+      <div>
+        <label>Full Name</label>
+        <input type="text" name="fullName" placeholder="Full Name">
+      </div>
+      <div>
+        <label>Email Address</label>
+        <input type="email" name="email" placeholder="Email Address">
+      </div>
+      <div>
+        <label>Account Type</label>
+        <select name="role">
+          <option value="moderator">Moderator</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
+      <div>
+        <button class="submit">Submit</button>
+      </div>
+      <div class="closebutton">
+        <div class="modal-toggle-button">
+          <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 32 32">
+            <path fill="currentColor"
+              d="M16 2C8.2 2 2 8.2 2 16s6.2 14 14 14s14-6.2 14-14S23.8 2 16 2m0 26C9.4 28 4 22.6 4 16S9.4 4 16 4s12 5.4 12 12s-5.4 12-12 12" />
+            <path fill="currentColor"
+              d="M21.4 23L16 17.6L10.6 23L9 21.4l5.4-5.4L9 10.6L10.6 9l5.4 5.4L21.4 9l1.6 1.6l-5.4 5.4l5.4 5.4z" />
+          </svg>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    const modal = document.querySelector(".modal")
+
+    document.querySelectorAll(".modal-toggle-button").forEach(button => button.onclick = function () {
+      modal.classList.toggle("show")
+    })
+
+  </script>
+</body>
+
+</html>

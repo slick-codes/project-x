@@ -3,6 +3,9 @@ const cors = require("cors")
 const dotenv = require("dotenv")
 const path = require("path")
 
+const cookieParser = require("cookie-parser")
+const session = require("express-session")
+
 dotenv.config()
 require("./config/database")
 
@@ -13,12 +16,21 @@ const userRoute = require("./routes/user")
 
 const app = express()
 
-
 // NOTE: External middlewares here
 app.use(cors())
 app.use(express.static(path.join(__dirname, "..", "static"))) // setting up static directory
 app.use(express.json()) // setting up json parser (to parse json body)
 app.use(express.urlencoded({ extended: true })) // setting up url parser (to parse html forms)
+
+// setup session 
+app.use(cookieParser())
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true }
+}))
+
 
 // configure ejs template 
 app.set("view engine", "ejs")
