@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgb(23, 23, 23);
+            height: 100vh;
+        }
+
+        form {
+            background: rgb(65, 65, 65);
+            display: flex;
+            flex-flow: column;
+            padding: 1em;
+            width: 20%;
+            gap: 1em;
+        }
+
+        form div {
+            display: flex;
+            flex-flow: column;
+        }
+
+        label {
+            color: white;
+            padding-bottom: .2em;
+            margin-left: .5em;
+        }
+
+        input,
+        select,
+        button {
+            border-radius: .3em;
+            border: none;
+            font-size: 1rem;
+            max-width: 30em;
+            width: 100%;
+            padding: 1em .5em;
+        }
+
+        button {
+            background-color: rgb(94, 224, 38);
+            color: rgb(0, 0, 0);
+            font-weight: bolder;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="main">
+        <form action="/create/user" method="POST">
+            <div>
+                <label>Full Name</label>
+                <input type="text" name="fullName" placeholder="Full Name">
+            </div>
+            <div>
+                <label>Company Name</label>
+                <input type="text" name="companyName" placeholder="Company Name">
+            </div>
+            <div>
+                <label>Email Address</label>
+                <input type="email" name="email" placeholder="Email Address">
+            </div>
+            <div>
+                <label>Password</label>
+                <input type="password" name="password" placeholder="Password">
+            </div>
+            <div>
+                <label>Account Type</label>
+                <select name="accountType">
+                    <option value="super-admin">Super Admin</option>
+                </select>
+            </div>
+            <button>Submit</button>
+        </form>
+    </main>
+</body>
+
+</html>
