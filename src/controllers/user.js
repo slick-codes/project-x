@@ -26,21 +26,24 @@ module.exports.login = async function (req, res, next) {
         const password = req.body.password
 
         if (!email) {
-            return res.redirect("404")
+            return res.redirect("/login?message=Email field cannot be empty")
         }
 
-        if (!password)
-            return res.redirect(`/login?&email=${email}`)
-
+        if (!password) return res.redirect(`/login?&email=${email}`)
 
         const user = await User.findOne({ email: email })
-        if (!user)
-            return res.redirect("404")
+        if (!user) return res.redirect("404")
+
+        if (password && !user.password) {
+            user.password = await bcryptjs.hash(password, Number(process.env.PASSWORD_SECRET))
+            await user.save()
+        } else {
+            const isPassword = await bcryptjs.compare(password, user.password)
+            if (!isPassword) return res.redirect(`login?email=${email}&message=Invalid Password`)
+
+        }
 
 
-        const isPassword = await bcryptjs.compare(password, user.password)
-        if (!isPassword)
-            return res.redirect("404?message=Invalid Password")
 
         // create a token | (ID card)
         const token = jwt.sign({
@@ -48,7 +51,6 @@ module.exports.login = async function (req, res, next) {
             username: user.username,
             firstName: user.firstName
         }, process.env.JWT_SECRET, { expiresIn: "60m" })
-
 
         req.session.token = token
         console.log(token)

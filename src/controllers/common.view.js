@@ -5,7 +5,9 @@ const User = require("../models/User")
 module.exports.signupView = async function (req, res, next) {
     try {
 
-
+        // prevent signup to be available when there's a super admin
+        const user = await User.findOne({ role: "super-admin" })
+        if (user) res.redirect("/login")
 
         res.render("signup", {})
     } catch (error) {
@@ -22,7 +24,7 @@ module.exports.loginView = async function (req, res, next) {
         if (email) user = await User.findOne({ email: email })
 
         if (!user && email)
-            return res.redirect("/login")
+            return res.redirect("/login?message=Email Is Not Registered")
 
         res.render("login", {
             user: user,
