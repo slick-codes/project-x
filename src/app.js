@@ -9,6 +9,7 @@ require("./config/database")
 
 //NOTE: Router Importation (Here)
 const commonView = require("./routes/common.view")
+const userroute = require("./routes/user")
 
 const app = express()
 
@@ -25,6 +26,7 @@ app.set("views", path.join(__dirname, "templates"))
 
 // setup imported routes here 
 app.use(commonView)
+app.use(userroute)
 
 app.use(function (req, res, next) {
     try {
