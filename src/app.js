@@ -28,7 +28,7 @@ app.use(commonView)
 
 app.use(function (req, res, next) {
     try {
-        res.status(404).render("404")
+        res.render("404")
     } catch (error) { }
 })
 
